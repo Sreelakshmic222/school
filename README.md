@@ -1,1 +1,1 @@
-# school
+# school django project
