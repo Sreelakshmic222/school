@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/assign_teacher.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Teachers to {{ student.name }}</title>
+</head>
+<body class="bg-light">
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4" style="width: 500px;">
+            <h2 class="text-center mb-4">Assign Teachers to {{ student.name }}</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="teachers">Select Teachers:</label><br>
+                    {% for teacher in teachers %}
+                        <div class="form-check">
+                            <input type="checkbox" name="teachers" class="form-check-input" value="{{ teacher.id }}" {% if teacher in student.teachers.all %}checked{% endif %}>
+                            <label class="form-check-label">
+                                {{ teacher.name }} ({{ teacher.subject }})
+                            </label><br>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-success btn-block">Assign Teachers</button>
+            </form>
+
+            <br>
+            <a href="{% url 'view_students' %}" class="btn btn-link">Back to Students List</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
